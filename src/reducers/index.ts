@@ -1,11 +1,12 @@
-import updateBookList from "./book-list"
-import updateshoppingCart from "./shopping-cart"
+import bookList from "./book-list"
+import shoppingCart from "./shopping-cart"
+import {combineReducers} from 'redux'
 
-const reducer = (state: any, action: any) => {
-    return {
-        bookList: updateBookList(state, action),
-        shoppingCart: updateshoppingCart(state, action)
-    } 
-}
+const rootReducer = combineReducers({
+    bookList,
+    shoppingCart
+})
 
-export default reducer
+export type RootState = ReturnType<typeof rootReducer>
+
+export default rootReducer

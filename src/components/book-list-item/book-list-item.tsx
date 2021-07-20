@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
+import { BookData } from '../../services/bookstore-service';
 import './book-list-item.css'
 
 type BookListItemType = {
-    book: any,
+    book: BookData,
     onAddedToCart: any
 }
 

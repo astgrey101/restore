@@ -1,32 +1,28 @@
-import React, {Component, FC} from 'react';
+import React, {FC, useContext} from 'react';
 import './book-list.css'
 import BookListItem from '../book-list-item';
-import { connect } from 'react-redux'
-import { withBookstoreService } from '../hoc';
-import { fetchBooks, bookAddedToCart } from '../../actions'
-import { compose } from '../../utils'
+import { useSelector, useDispatch } from 'react-redux'
+import { bookAddedToCart, booksLoaded, booksError, booksRequested } from '../../actions'
 import Spinner from '../spiner';
 import ErrorIndicator from '../error-indicator';
+import MyContext from '../bookstore-service-context';
+import { useEffect } from 'react';
+import { RootState } from '../../reducers';
+import { BookData } from '../../services/bookstore-service';
 
 type BookListType = {
-    books: any,
-    onAddedToCart: any
-}
-
-type BookListContainerType = {
-    books: any,
-    loading: any,
-    error: any,
-    fetchBooks: any,
-    onAddedToCart: any
+    books: Array<BookData>,
+    onAddedToCart: (id: number) => any
 }
 
 const BookList: FC<BookListType> = ({books, onAddedToCart}) => {
+
+
     return (
         <ul className="book-list">
             {
             books.map(
-            (book: any) => {
+            (book: BookData) => {
             return (
                 <li key={book.id}>
                     <BookListItem 
@@ -41,46 +37,37 @@ const BookList: FC<BookListType> = ({books, onAddedToCart}) => {
     )
 }
 
-class BookListContainer extends Component<BookListContainerType> {
+const BookListContainer = () => {
 
-    componentDidMount() {
-        this.props.fetchBooks()
+    
+
+    const upBookList = useSelector((state: RootState) => state.bookList)
+
+    const serviceValue = useContext(MyContext)
+
+    const dispatch = useDispatch()
+
+    const { books, loading, error } = upBookList
+    
+    useEffect(() => {
+        dispatch(booksRequested())
+            serviceValue.getBooks()
+            .then((data: any) => dispatch(booksLoaded(data)))
+            .catch((err: any) => dispatch(booksError(err)))}, [dispatch, serviceValue] )
+
+
+    if (loading) {
+        return (<Spinner />)
     }
 
-    render () {
-        const { books, loading, error, onAddedToCart } = this.props
-
-        if (loading) {
-            return <Spinner />
-        }
-
-        if (error) {
-            return <ErrorIndicator />
-        }
-
-        return (
-            <BookList books={books} onAddedToCart={onAddedToCart}/>
-        )
+    if (error) {
+        return (<ErrorIndicator />)
     }
+
+    return (
+        <BookList books={books} onAddedToCart={(id: number) => dispatch(bookAddedToCart(id))}/>
+    )
+
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        books: state.bookList.books,
-        loading: state.bookList.loading,
-        error: state.bookList.error
-    }
-}
-
-const mapDispatchToProps = (dispatch: any, ownProps: any) => {
-    const {bookstoreService} = ownProps
-    return {
-        fetchBooks: fetchBooks(bookstoreService, dispatch),
-        onAddedToCart: (id: any) => dispatch(bookAddedToCart(id))
-    }
-}
-
-export default compose(
-    withBookstoreService(),
-    connect(mapStateToProps, mapDispatchToProps)
-)(BookListContainer)
+export default BookListContainer

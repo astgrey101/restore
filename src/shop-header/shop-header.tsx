@@ -3,8 +3,8 @@ import './shop-header.css';
 import { Link } from 'react-router-dom'
 
 type ShopHeaderType = {
-  numItems: any,
-  total: any
+  numItems: number,
+  total: number
 }
 
 const ShopHeader:FC<ShopHeaderType> = ({ numItems, total }) => {

@@ -1,9 +1,3 @@
-import {
-  BookstoreServiceProvider,
-  BookstoreServiceConsumer
-} from './bookstore-service-context';
+import MyContext from './bookstore-service-context';
 
-export {
-  BookstoreServiceProvider,
-  BookstoreServiceConsumer
-};
+export default MyContext;

@@ -1,52 +1,58 @@
+import { BookData } from "../services/bookstore-service"
 
-const booksLoaded = (newBooks: any) => {
+export type BookPayloadType = {
+    type: string,
+    payload: {
+        bookId: number, 
+        amount: number
+    }
+
+}
+
+export type BookListPayloadType = {
+    type: string,
+    payload: Array<BookData>
+
+}
+
+
+export const booksLoaded = (newBooks: Array<BookData>) => {
     return {
         type: 'FETCH_BOOKS_SUCCESS',
         payload: newBooks
     }
 }
 
-const booksRequested = () => {
+export const booksRequested = () => {
     return {
         type: 'FETCH_BOOKS_REQUEST'
     }
 }
 
-const booksError = (error: any) => {
+export const booksError = (error: any) => {
     return {
         type: 'FETCH_BOOKS_FAILURE',
         payload: error
     }
 }
 
-export const bookAddedToCart = (bookId: any) => {
+export const bookAddedToCart = (bookId: number, amount: number = 1) => {
     return {
         type: 'BOOK_ADDED_TO_CART',
-        payload: bookId
+        payload: {bookId, amount}
     }
 }
 
-export const bookRemovedFromCart = (bookId: any) => {
+export const bookRemovedFromCart = (bookId: number, amount: number = -1) => {
     return {
         type: 'BOOK_REMOVED_TO_CART',
-        payload: bookId
+        payload: {bookId, amount}
     }
 }
 
-export const allbooksRemovedFromCart = (bookId: any) => {
+export const allbooksRemovedFromCart = (bookId: number, amount: number = 0) => {
     return {
         type: 'ALL_BOOKS_REMOVED_TO_CART',
-        payload: bookId
+        payload: {bookId, amount}
     }
-}
-
-const fetchBooks = (bookstoreService: any, dispatch: any) => () => {
-    dispatch(booksRequested())
-    bookstoreService.getBooks()
-        .then((data: any) => dispatch(booksLoaded(data)))
-        .catch((err: any) => dispatch(booksError(err)))
-}
-
-export {
-    fetchBooks
 }

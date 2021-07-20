@@ -1,12 +1,19 @@
-const updateBookList = (state: any, action: any) => {
+import { BookListPayloadType } from "../actions";
+import { BookData } from "../services/bookstore-service";
 
-    if (state === undefined) {
-        return {
-            books: [],
-            loading: true,
-            error: null
-        }
-    }
+const initialState = {
+    books: [],
+    loading: true,
+    error: null
+}
+
+type BookListType = {
+    books: Array<BookData>,
+    loading: boolean,
+    error: any
+}
+
+const bookList = (state: BookListType = initialState, action: BookListPayloadType): BookListType  => {
 
     switch(action.type) {
         case 'FETCH_BOOKS_REQUEST':
@@ -31,8 +38,8 @@ const updateBookList = (state: any, action: any) => {
             };
 
         default:
-            return state.bookList
+            return state
     }
 }
 
-export default updateBookList
+export default bookList
