@@ -6,22 +6,24 @@ import App from './components/app'
 import MyContext from './components/bookstore-service-context';
 import ErrorBoundry from './components/error-boundary'
 import BookstoreService from './services/bookstore-service'
-import store from './store'
+import { persistor, store } from './store';
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 const bookstoreService = new BookstoreService()
 
-
-
 ReactDOM.render(
     <Provider store={store}>
-        <ErrorBoundry>
-            <MyContext.Provider value={bookstoreService}>
-                <Router>
-                    <App/>
-                </Router>
-            </MyContext.Provider>
-        </ErrorBoundry>
+        <PersistGate loading={null} persistor={persistor}>
+            <ErrorBoundry>
+                <MyContext.Provider value={bookstoreService}>
+                    <Router>
+                        <App/>
+                    </Router>
+                </MyContext.Provider>
+            </ErrorBoundry>
+        </PersistGate>
+        
     </Provider>
     ,document.getElementById('root'));
 

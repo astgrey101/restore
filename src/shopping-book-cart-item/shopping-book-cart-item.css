@@ -1,0 +1,9 @@
+.book-coverage {
+  flex-shrink: 0;
+  width: 120px;
+  margin-right: 30px;
+}
+
+img {
+  max-width: 100%;
+}

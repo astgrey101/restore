@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import { BookData } from '../../services/bookstore-service';
 import './book-list-item.css'
 
-type BookListItemType = {
+export type BookListItemType = {
     book: BookData,
     onAddedToCart: any
 }

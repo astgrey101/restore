@@ -1,12 +1,30 @@
 import './shopping-cart-table.css';
-import store from '../store';
 import { getTotalSum } from './selectors';
 import ShoppingBookCartItem from '../shopping-book-cart-item';
 import { getCartItemsList } from '../reducers/selectors';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useContext, useEffect } from 'react';
+import MyContext from '../components/bookstore-service-context';
+import { booksError, booksLoaded, booksRequested } from '../actions';
 
 
 const ShoppingCartTable = () => {
+
+  // block added here in order to set all books in state when page is loaded
+  const dispatch = useDispatch()
+  const serviceValue = useContext(MyContext)
+  useEffect(
+    () => {
+        dispatch(booksRequested())
+            serviceValue.getBooks()
+            .then((data: any) => dispatch(booksLoaded(data)))
+            .catch((err: any) => dispatch(booksError(err)));
+        return () => {
+            dispatch(booksLoaded([]))
+        }
+    }, 
+    [dispatch, serviceValue] 
+)
 
   const totalSum = useSelector(getTotalSum)
   const cartItems = useSelector(getCartItemsList)
@@ -19,6 +37,7 @@ const ShoppingCartTable = () => {
           <tr>
             <th>#</th>
             <th>Item</th>
+            <th className="title">Title</th>
             <th>Count</th>
             <th>Price</th>
             <th>Action</th>

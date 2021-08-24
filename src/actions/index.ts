@@ -1,17 +1,17 @@
 import { BookData } from "../services/bookstore-service"
 
-export type BookPayloadType = {
+export interface BookPayloadType {
     type: string,
-    payload: {
+    payload?: {
         bookId: number, 
         amount: number
     }
 
 }
 
-export type BookListPayloadType = {
+export interface BookListPayloadType {
     type: string,
-    payload: Array<BookData>
+    payload?: Array<BookData>
 
 }
 

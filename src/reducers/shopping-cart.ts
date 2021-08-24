@@ -1,6 +1,6 @@
 import { BookPayloadType } from "../actions"
 
-type ShoppingCartType = {
+interface ShoppingCartType {
     cartItems: {
         [id: number] : {id: number, amount: number}
     }
@@ -15,14 +15,14 @@ const shoppingCart = (state: ShoppingCartType = initialState, action: BookPayloa
     switch(action.type) {
         
         case 'BOOK_ADDED_TO_CART': {
-            const currentAmmount = state.cartItems[action.payload.bookId]?.amount ?? 0
+            const currentAmmount = state.cartItems[action.payload!.bookId]?.amount ?? 0
             return {
                 ...state,
                 cartItems: {
                     ...state.cartItems,
-                    [action.payload.bookId]: {
-                        id: action.payload.bookId,
-                        amount: currentAmmount + action.payload.amount
+                    [action.payload!.bookId]: {
+                        id: action.payload!.bookId,
+                        amount: currentAmmount + action.payload!.amount
                     }
                 }
                 
@@ -31,9 +31,9 @@ const shoppingCart = (state: ShoppingCartType = initialState, action: BookPayloa
             
 
         case 'BOOK_REMOVED_TO_CART': {
-            const currentAmmount = state.cartItems[action.payload.bookId]?.amount ?? 0
+            const currentAmmount = state.cartItems[action.payload!.bookId]?.amount ?? 0
             if(currentAmmount === 1) {
-                delete state.cartItems[action.payload.bookId]
+                delete state.cartItems[action.payload!.bookId]
                 return {
                     ...state,
                     cartItems: {
@@ -46,9 +46,9 @@ const shoppingCart = (state: ShoppingCartType = initialState, action: BookPayloa
                 ...state,
                 cartItems: {
                     ...state.cartItems,
-                    [action.payload.bookId]: {
-                        id: action.payload.bookId,
-                        amount: currentAmmount + action.payload.amount
+                    [action.payload!.bookId]: {
+                        id: action.payload!.bookId,
+                        amount: currentAmmount + action.payload!.amount
                     }
                 }
                 
@@ -56,7 +56,7 @@ const shoppingCart = (state: ShoppingCartType = initialState, action: BookPayloa
         }
 
         case 'ALL_BOOKS_REMOVED_TO_CART':
-                delete state.cartItems[action.payload.bookId]
+                delete state.cartItems[action.payload!.bookId]
                 return {
                     ...state,
                     cartItems: {

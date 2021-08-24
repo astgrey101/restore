@@ -1,11 +1,10 @@
+import './shopping-book-cart-item.css';
 import { useDispatch, useSelector } from 'react-redux'
 import { 
     bookAddedToCart, 
     bookRemovedFromCart, 
     allbooksRemovedFromCart } from '../actions'
-import { BookData } from '../services/bookstore-service';
 import { getBookItemById } from '../reducers/selectors';
-import store from '../store';
 import { FC } from 'react';
 import { useMemo } from 'react';
 
@@ -28,11 +27,16 @@ const ShoppingBookCartItem: FC<ShoppingBookCartItemType> = ({item, idx}) => {
     if (!bookItem) {
       return <></>
     }
-    const { title, price } = bookItem
+    const { title, price, coverImage } = bookItem
   
     return (
       <tr key={id}>
         <td>{idx + 1}</td>
+        <td>
+            <div className="book-coverage">
+              <img src={coverImage} alt="cover" />
+          </div>
+        </td>
         <td>{title}</td>
         <td>{amount}</td>
         <td>${price*amount}</td>

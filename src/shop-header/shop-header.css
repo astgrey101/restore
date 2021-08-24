@@ -5,10 +5,22 @@
   justify-content: space-between;
 }
 
+.shop-items {
+  display: flex;
+  justify-content: space-between;
+}
+
 .shop-header .logo {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 2.5rem;
   padding-left: 1rem;
+}
+
+.shop-header .shop-items .store {
+  align-self: center;
+  font-size: 1.3rem;
+  padding-top: 0.4rem;
+  padding-right: 1rem;
 }
 
 .shop-header .shopping-cart {

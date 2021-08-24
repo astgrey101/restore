@@ -1,8 +1,10 @@
-import HomePage from "./home-page";
-import CardPage from "./card-page";
+import CatalogPage from "./catalog-page";
+import ShoppingCardPage from "./card-page";
+import MainPage from "./main-page";
 
 
 export {
-    HomePage,
-    CardPage
+    CatalogPage,
+    ShoppingCardPage,
+    MainPage
 }

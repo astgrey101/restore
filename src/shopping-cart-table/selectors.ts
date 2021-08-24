@@ -28,14 +28,3 @@ export const getTotalAmmount = createSelector(
     return sum + item.amount
   } ,0)
 )
-
-// export const getTotalAmmount = (cartItems: {[id: number] : {id: number, amount: number}}) => {
-//   let sum = 0
-//   Object.values(cartItems).forEach ((item: {id: number, amount: number}) => {
-//     const quantity = item.amount
-//     sum = sum + quantity
-//   } 
-//   )
-
-//   return sum
-// }

@@ -7,7 +7,7 @@ const initialState = {
     error: null
 }
 
-type BookListType = {
+interface BookListType {
     books: Array<BookData>,
     loading: boolean,
     error: any
@@ -25,7 +25,7 @@ const bookList = (state: BookListType = initialState, action: BookListPayloadTyp
 
         case 'FETCH_BOOKS_SUCCESS': 
             return {
-                books: action.payload,
+                books: action.payload!,
                 loading: false,
                 error: null
             };
@@ -34,7 +34,7 @@ const bookList = (state: BookListType = initialState, action: BookListPayloadTyp
             return {
                 books: [],
                 loading: false,
-                error: action.payload
+                error: action.payload!
             };
 
         default:
