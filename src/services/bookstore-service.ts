@@ -13,7 +13,7 @@ export default class BookstoreService {
     getBooks() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-              if (Math.random() > 0.9) {
+              if (Math.random() > 1) {
                 reject(new Error('Something bad happened'))
               } else {
                 const booksData = new BooksData()

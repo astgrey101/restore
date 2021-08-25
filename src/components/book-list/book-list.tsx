@@ -40,9 +40,6 @@ const BookListContainer = () => {
                 serviceValue.getBooks()
                 .then((data: any) => dispatch(booksLoaded(data)))
                 .catch((err: any) => dispatch(booksError(err)));
-            return () => {
-                dispatch(booksLoaded([]))
-            }
         }, 
         [dispatch, serviceValue] 
     )
