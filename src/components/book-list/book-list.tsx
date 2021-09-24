@@ -1,108 +1,149 @@
-import './book-list.css'
-import '../book-list-item/book-list-item.css'
-import { useSelector, useDispatch } from 'react-redux'
-import { bookAddedToCart } from '../../actions'
+import React, {
+  MouseEvent, useCallback, useState, useMemo, useContext, useEffect,
+} from 'react';
+import './book-list.css';
+import '../book-list-item/book-list-item.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { List, AutoSizer, WindowScroller } from 'react-virtualized';
+import { addBookToCart, fetchBooksAsync } from '../../actions';
 import Spinner from '../spiner';
 import ErrorIndicator from '../error-indicator';
 import { RootState } from '../../reducers';
-import { useState } from 'react';
-import { useMemo } from 'react';
-import { useContext } from 'react';
-import { useEffect } from 'react';
-import MyContext from '../bookstore-service-context/bookstore-service-context'
-import { booksLoaded, booksError, booksRequested } from '../../actions'
-import { SearchField } from '../search-field/search-field';
-import {List, AutoSizer, WindowScroller} from 'react-virtualized';
+import MyContext from '../bookstore-service-context/bookstore-service-context';
+import UpdateBookForm from '../update-book-form';
+import AddBookForm from '../add-book-form';
+import SearchField from '../search-field';
 
 const BookListContainer = () => {
+  const [input, setInput] = useState('');
+  const [updateBookId, setUpdateBookId] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [value, setValue] = useState<number | null>(null);
 
-    const [input, setInput] = useState('')
+  const setUpdateBookFormVisible = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      if (event.currentTarget.dataset.id) {
+        setUpdateBookId(Number(event.currentTarget.dataset.id));
+        setValue(Number(event.currentTarget.dataset.id));
+      }
+      setIsVisible(true);
+    }, [],
+  );
 
-    const upBookList = useSelector((state: RootState) => state.bookList)
+  const setAddBookFormVisible = useCallback(() => {
+    if (!isVisible || !value) {
+      setIsVisible(!isVisible);
+    }
+    setValue(null);
+  }, [isVisible, value]);
 
-    const serviceValue = useContext(MyContext)
+  const isAddNewBook = useMemo(() => isVisible && !value, [isVisible, value]);
 
-    const dispatch = useDispatch()
+  const isEditBook = useMemo(() => isVisible && value, [isVisible, value]);
 
-    const { books, loading, error } = upBookList
+  const upBookList = useSelector((state: RootState) => state.bookList);
 
-    const savedBookList = useMemo(
-        () => {
-            return books.filter(
-            (item) => item.title.toLowerCase().includes(input.toLowerCase())
-        )}, 
-        [input, books]
-    )
+  const serviceValue = useContext(MyContext);
 
-    useEffect(
-        () => {
-            dispatch(booksRequested())
-                serviceValue.getBooks()
-                .then((data: any) => dispatch(booksLoaded(data)))
-                .catch((err: any) => dispatch(booksError(err)));
-        }, 
-        [dispatch, serviceValue] 
-    )
+  const dispatch = useDispatch();
 
-    const rowRendererItem = ({index, key, style}: any) => {
+  const { books, loading, error } = upBookList;
 
-        let boook = savedBookList[index];
-        if (boook) {
-        const { id, title, author, price, coverImage } = boook;
-        return (
-          <div className="book-list-item" style={style} key={key}>
-            <div className="book-cover">
-              <img src={coverImage} alt="cover" />
+  const savedBookList = useMemo(
+    () => books.filter(
+      (item) => item.title.toLowerCase().includes(input.toLowerCase()),
+    ),
+    [input, books],
+  );
+
+  useEffect(
+    () => { dispatch(fetchBooksAsync(serviceValue)); }, [dispatch, serviceValue],
+  );
+
+  const rowRendererItem = ({ index, key, style }: any) => {
+    const book = savedBookList[index];
+    if (book) {
+      const {
+        id, title, author, price, coverImage,
+      } = book;
+      return (
+        <div className="book-list-item" style={style} key={key}>
+          <div className="book-cover">
+            <img src={coverImage} alt="cover" />
+          </div>
+          <div className="book-details">
+            <span className="book-title">{title}</span>
+            <div className="book-author">{author}</div>
+            <div className="book-price">
+              $
+              {price}
             </div>
-            <div className="book-details">
-              <span className="book-title">{title}</span>
-              <div className="book-author">{author}</div>
-              <div className="book-price">${price}</div>
-              <button 
-                onClick={() => dispatch(bookAddedToCart(id))}
-                className="btn btn-info add-to-cart">
-                Add to cart</button>
+            <div>
+              <button type="button" className="btn btn-info add-to-cart" onClick={() => dispatch(addBookToCart(id))}>
+                Add to cart
+              </button>
+              <button type="button" className="btn btn-info edit-book" onClick={setUpdateBookFormVisible} data-id={id}>
+                Edit Book
+              </button>
             </div>
           </div>
-        );
-        }
+        </div>
+      );
+    } return null;
+  };
+
+  if (loading) {
+    return (<Spinner />);
+  }
+
+  if (error) {
+    return (<ErrorIndicator />);
+  }
+
+  return (
+    <div>
+      <SearchField keyword={input} setKeyword={setInput} />
+      <button type="button" className="btn btn-info show-add-new-book" onClick={setAddBookFormVisible}>
+        Add Book
+      </button>
+
+      {isAddNewBook && (<AddBookForm />)}
+
+      {
+        isEditBook && (
+        <UpdateBookForm
+          bookId={updateBookId}
+          switchDisplayEditForm={() => setIsVisible(false)}
+        />
+        )
       }
 
-    if (loading) {
-        return (<Spinner />)
-    }
+      <div>
+        <WindowScroller>
+          {({ height, registerChild, scrollTop }) => (
+            <div ref={(el) => registerChild(el)} className="book-list">
+              <AutoSizer disableHeight>
+                {
+                                    ({ width }) => (
+                                      <List
+                                        width={width}
+                                        height={height}
+                                        rowCount={savedBookList.length}
+                                        rowHeight={220}
+                                        autoHeight
+                                        scrollTop={scrollTop}
+                                        rowRenderer={rowRendererItem}
+                                      />
+                                    )
+                                }
+              </AutoSizer>
+            </div>
+          )}
+        </WindowScroller>
+      </div>
 
-    if (error) {
-        return (<ErrorIndicator />)
-    }
+    </div>
+  );
+};
 
-    return (
-        <div>
-            <SearchField keyword={input} setKeyword={setInput}/>
-            <WindowScroller>
-            {({ height, registerChild, scrollTop }) => (
-                <div ref={el => registerChild(el)} className={"book-list"}>
-                    <AutoSizer disableHeight>
-                        {
-                            ({width}) => (
-                                <List
-                                    width={width}
-                                    height={height}
-                                    rowCount={1000}
-                                    rowHeight={220}
-                                    autoHeight
-                                    scrollTop={scrollTop}
-                                    rowRenderer={rowRendererItem}
-                                />
-                            )
-                        }
-                    </AutoSizer>
-                </div>
-            )}
-            </WindowScroller> 
-        </div>
-    )
-
-}
-
-export default BookListContainer
+export default BookListContainer;

@@ -1,31 +1,26 @@
+import React, { useContext, useEffect } from 'react';
 import './shopping-cart-table.css';
+import { useDispatch, useSelector } from 'react-redux';
 import { getTotalSum } from './selectors';
 import ShoppingBookCartItem from '../shopping-book-cart-item';
 import { getCartItemsList } from '../reducers/selectors';
-import { useDispatch, useSelector } from 'react-redux';
-import { useContext, useEffect } from 'react';
 import MyContext from '../components/bookstore-service-context';
-import { booksError, booksLoaded, booksRequested } from '../actions';
-
+import { fetchBooksAsync } from '../actions';
 
 const ShoppingCartTable = () => {
-
   // block added here in order to set all books in state when page is loaded
-  const dispatch = useDispatch()
-  const serviceValue = useContext(MyContext)
+  const dispatch = useDispatch();
+  const serviceValue = useContext(MyContext);
   useEffect(
     () => {
-        dispatch(booksRequested())
-            serviceValue.getBooks()
-            .then((data: any) => dispatch(booksLoaded(data)))
-            .catch((err: any) => dispatch(booksError(err)));
-    }, 
-    [dispatch, serviceValue] 
-)
+      dispatch(fetchBooksAsync(serviceValue));
+    },
+    [dispatch, serviceValue],
+  );
 
-  const totalSum = useSelector(getTotalSum)
-  const cartItems = useSelector(getCartItemsList)
-  
+  const totalSum = useSelector(getTotalSum);
+  const cartItems = useSelector(getCartItemsList);
+
   return (
     <div className="shopping-cart-table">
       <h2>Your Order</h2>
@@ -42,15 +37,18 @@ const ShoppingCartTable = () => {
         </thead>
 
         <tbody>
-          { cartItems.map((item, idx) => <ShoppingBookCartItem key={item.id} idx={idx} item={item} />)}
+          { cartItems.map(
+            (item, idx) => <ShoppingBookCartItem key={item.id} idx={idx} item={item} />,
+          )}
         </tbody>
       </table>
 
       <div className="total">
-        Total: ${totalSum}
+        Total: $
+        {totalSum}
       </div>
     </div>
   );
 };
 
-export default ShoppingCartTable
+export default ShoppingCartTable;

@@ -1,0 +1,133 @@
+.update-book-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 95%;
+}
+
+.update-book-group {
+    display: flex;
+    flex-direction: column;
+    /*margin-top: 15px;*/
+    width: 100%;
+}
+
+.update-book-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.update-book-group3 {
+    display: flex;
+    flex-direction: row;
+    /*margin-top: 15px;*/
+    justify-content: flex-end;
+    margin-right: 10px;
+}
+
+.update-book-group3 button {
+    display: block;
+}
+
+.update-book-form label {
+    display: block;
+    padding-top:0.5rem;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1rem;
+    color:slategrey;
+    margin-bottom: 0;
+}
+
+.update-book-group div {
+    margin: 0 10px;
+    width: 100%;
+}
+
+.update-book-group div input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    border-radius: 15px;
+    border-width: 1px;
+    font-size: 1.1rem;
+    outline: none;
+    color:dimgray
+}
+
+.update-book-form input {
+    display: block;
+}
+
+.save-edit-book {
+    display: inline;
+    margin-left: 5px;
+    background-color: green;
+}
+
+.save-edit-book:hover {
+    background-color: darkcyan;
+}
+
+.cancel-edit-book {
+    display: inline;
+    margin-left: 5px;
+    background-color: darkgoldenrod;
+}
+
+.cancel-edit-book:hover {
+    background-color: darkorange;
+}
+
+.book-added-confirmation {
+    padding-left:45%;
+    padding-top: 1rem;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1rem;
+    color:green;
+}
+
+.update-book-form p {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 0.8rem;
+    color: red;
+    margin: 0;
+    padding: 0;
+}
+
+.update-book-form input[type="file"] {
+    display: none;
+}
+
+.update-book-form .upload-file-btn {
+    display: block;
+    background-color: darkseagreen;
+    height: 40px;
+    width: 100px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 400;
+    user-select: none;
+    padding: .375rem .75rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    border: 1px solid #17a2b8;
+    color: whitesmoke;
+    /*font-family: Arial;*/
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+.update-book-form .upload-file-btn:hover {
+    background-color: cadetblue;
+}
+
+.update-book-image-container {
+    width: 170px;
+    margin-right: 50px;
+}
+
+#image2 {
+    margin: 15px 0;
+}

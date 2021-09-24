@@ -1,5 +1,5 @@
 .search {
-    width:75%;
+    width:65%;
     border-width: 1px;
     border-radius: 15px;
     padding:0.5rem;
@@ -12,4 +12,8 @@
     font-family: "Playfair Display", Georgia, serif;
     font-size: 1.5rem;
     color:slategrey
+}
+
+.search-field {
+    display: inline;
 }

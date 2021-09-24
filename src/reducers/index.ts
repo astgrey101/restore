@@ -1,12 +1,12 @@
-import bookList from "./book-list"
-import shoppingCart from "./shopping-cart"
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux';
+import bookList from './book-list';
+import shoppingCart from './shopping-cart';
 
 const rootReducer = combineReducers({
-    bookList,
-    shoppingCart
-})
+  bookList,
+  shoppingCart,
+});
 
 export type RootState = ReturnType<typeof rootReducer>
 
-export default rootReducer
+export default rootReducer;

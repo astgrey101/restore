@@ -1,12 +1,10 @@
+import React from 'react';
 import ShoppingCartTable from '../../shopping-cart-table';
 
-const ShoppingCardPage = () => {
-    return (
-        <div>
-            <ShoppingCartTable />
-        </div>
-    )
-    
-}
+const ShoppingCardPage = () => (
+  <div>
+    <ShoppingCartTable />
+  </div>
+);
 
-export default ShoppingCardPage
+export default ShoppingCardPage;

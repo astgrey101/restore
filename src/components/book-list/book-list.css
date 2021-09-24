@@ -1,3 +1,22 @@
 .book-list {
     list-style: none;
   }
+
+.show-add-new-book {
+    display: inline;
+}
+
+.add-to-cart {
+    display: inline;
+    margin-right: 5px;
+}
+
+.edit-book {
+    display: inline;
+    margin-left: 5px;
+    background-color: darkseagreen;
+}
+
+.edit-book:hover {
+    background-color: cadetblue;
+}

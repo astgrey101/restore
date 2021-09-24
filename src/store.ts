@@ -1,18 +1,22 @@
-import { createStore, applyMiddleware } from "redux";
-import { compose } from "redux";
-import rootReducer from "./reducers";
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
+import {
+  createStore, applyMiddleware, compose, AnyAction,
+} from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import thunk, { ThunkDispatch } from 'redux-thunk';
+import rootReducer, { RootState } from './reducers';
 
 const persistConfig = {
-    key: 'root',
-    storage: storage,
-    whitelist: ['shoppingCart']
-  }
+  key: 'root',
+  storage,
+  whitelist: ['shoppingCart'],
+};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export let store = createStore(persistedReducer, composeEnhancer(applyMiddleware()))
-export let persistor = persistStore(store)
+export const store = createStore(persistedReducer, composeEnhancer(applyMiddleware(thunk)));
+export const persistor = persistStore(store);
+
+export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
