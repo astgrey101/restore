@@ -1,23 +1,24 @@
-# Getting Started with Create React App
+# Book store (Restore)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Launch the project
 
-In the project directory, you can run:
+In order to run the project locally launch the next command in the project directory:
 
+### Launch the JSON Server
+### `json-server --watch ./src/services/db.json --port 8000`
+
+Runs the app json server on port 8000.\
+Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
+
+### Launch the App
 ### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
