@@ -124,18 +124,18 @@ const BookListContainer = () => {
             <div ref={(el) => registerChild(el)} className="book-list">
               <AutoSizer disableHeight>
                 {
-                                    ({ width }) => (
-                                      <List
-                                        width={width}
-                                        height={height}
-                                        rowCount={savedBookList.length}
-                                        rowHeight={220}
-                                        autoHeight
-                                        scrollTop={scrollTop}
-                                        rowRenderer={rowRendererItem}
-                                      />
-                                    )
-                                }
+                  ({ width }) => (
+                    <List
+                      width={width}
+                      height={height}
+                      rowCount={savedBookList.length}
+                      rowHeight={220}
+                      autoHeight
+                      scrollTop={scrollTop}
+                      rowRenderer={rowRendererItem}
+                    />
+                  )
+                }
               </AutoSizer>
             </div>
           )}
