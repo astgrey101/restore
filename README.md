@@ -1,10 +1,12 @@
 # Book store (Restore)
 
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Launch the project
 
 In order to run the project locally launch the next command in the project directory:
+
 
 ### Launch the JSON Server
 ### `json-server --watch ./src/services/db.json --port 8000`
