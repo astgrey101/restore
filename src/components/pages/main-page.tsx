@@ -2,7 +2,7 @@ import React from 'react';
 
 const MainPage = () => (
   <div>
-    Welcome to Book Store Main PageQQQ
+    Welcome to Book Store Main Page
   </div>
 );
 
