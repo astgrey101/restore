@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 import {
   bookListSelector, getBookItemById, getCartItemById, getCartItemsList,
-} from '../reducers/selectors';
-import { BookData } from '../services/bookstore-service';
+} from '../../reducers/selectors';
+import { BookData } from '../../services/bookstore-service';
 
 export const getItemSumById = (itemId: number) => createSelector(
   getBookItemById(itemId),

@@ -5,8 +5,8 @@ import {
   addBookToCart,
   removeBookFromCart,
   removeAllBooksFromCart,
-} from '../actions';
-import { getBookItemById } from '../reducers/selectors';
+} from '../../actions';
+import { getBookItemById } from '../../reducers/selectors';
 
 interface ShoppingBookCartItemType {
   item:

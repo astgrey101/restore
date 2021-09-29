@@ -3,9 +3,9 @@ import './shopping-cart-table.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTotalSum } from './selectors';
 import ShoppingBookCartItem from '../shopping-book-cart-item';
-import { getCartItemsList } from '../reducers/selectors';
-import MyContext from '../components/bookstore-service-context';
-import { fetchBooksAsync } from '../actions';
+import { getCartItemsList } from '../../reducers/selectors';
+import MyContext from '../bookstore-service-context';
+import { fetchBooksAsync } from '../../actions';
 
 const ShoppingCartTable = () => {
   // block added here in order to set all books in state when page is loaded
