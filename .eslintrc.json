@@ -17,7 +17,9 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -34,14 +36,12 @@
     "rules": {
         "no-use-before-define": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
-        "no-param-reassign": [2, { "props": false }],
         "jsx-a11y/label-has-associated-control": ["error", {
             "required": {
                 "some": ["id"]
             }
         }],
-        "@typescript-eslint/no-unused-vars": "error",
-        "no-shadow": ["error", { "allow": ["RequestStatus"] }],
+        "no-shadow": "off",
         "react/jsx-props-no-spreading": "off",
         "react/jsx-filename-extension": [2, { "extensions": [".ts", ".tsx"] }],
         "import/extensions": [

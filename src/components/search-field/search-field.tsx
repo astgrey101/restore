@@ -3,7 +3,7 @@ import './search-field.css';
 
 interface SearchFieldType {
     keyword: string,
-    setKeyword: any
+    setKeyword: (value: string) => void
 }
 
 const SearchField: FC<SearchFieldType> = ({ keyword, setKeyword }) => (

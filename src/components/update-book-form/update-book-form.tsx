@@ -14,7 +14,14 @@ import { getBookItemById } from '../../reducers/selectors';
 
 interface BookItemType {
     bookId: number,
-    switchDisplayEditForm: any
+    switchDisplayEditForm: (value: boolean) => void
+}
+
+interface SubmitUpdateBookData {
+  author: string,
+  coverImage: FileList,
+  price: number,
+  title: string
 }
 
 const UpdateBookForm: FC<BookItemType> = ({ bookId, switchDisplayEditForm }) => {
@@ -42,7 +49,9 @@ const UpdateBookForm: FC<BookItemType> = ({ bookId, switchDisplayEditForm }) => 
     resolver: yupResolver(schema),
   });
 
-  const updatedBook = useSelector(useMemo(() => getBookItemById(bookId), [bookId])) as BookData;
+  // const updatedBook = useSelector(useMemo(() => getBookItemById(bookId), [bookId])) as BookData;
+  const updatedBookSelector = useSelector(getBookItemById);
+  const updatedBook = useMemo(() => updatedBookSelector(bookId), [bookId]) as BookData;
 
   const watchImage = watch('coverImage', updatedBook.coverImage);
 
@@ -76,7 +85,7 @@ const UpdateBookForm: FC<BookItemType> = ({ bookId, switchDisplayEditForm }) => 
     });
   }, [updatedBook, reset]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: SubmitUpdateBookData) => {
     let updateCoverImageValue: string;
     if (data.coverImage.length !== 0) {
       updateCoverImageValue = imageSrc;

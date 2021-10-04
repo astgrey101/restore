@@ -1,5 +1,5 @@
 import React, {
-  FC, useEffect, useState, useContext,
+  useEffect, useState, useContext,
 } from 'react';
 import { useForm } from 'react-hook-form';
 import './add-book-form.css';
@@ -10,7 +10,14 @@ import { addBookToCatalogAsync } from '../../actions';
 import MyContext from '../bookstore-service-context/bookstore-service-context';
 import { AppDispatch } from '../../store';
 
-const AddBookForm: FC<any> = () => {
+interface SubmitAddBookData {
+  author: string,
+  coverImage: FileList,
+  price: number,
+  title: string
+}
+
+const AddBookForm = (): JSX.Element => {
   const serviceValue = useContext(MyContext);
   const dispatch: AppDispatch = useDispatch();
   const [bookAdded, setBookAdded] = useState(false);
@@ -50,7 +57,7 @@ const AddBookForm: FC<any> = () => {
     }
   }, [watchImage]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: SubmitAddBookData) => {
     const newData = {
       title: data.title,
       author: data.author,

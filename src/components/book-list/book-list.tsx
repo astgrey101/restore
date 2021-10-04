@@ -2,7 +2,6 @@ import React, {
   MouseEvent, useCallback, useState, useMemo, useContext, useEffect,
 } from 'react';
 import './book-list.css';
-import '../book-list-item/book-list-item.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, AutoSizer, WindowScroller } from 'react-virtualized';
 import { addBookToCart, fetchBooksAsync } from '../../actions';
@@ -14,7 +13,13 @@ import UpdateBookForm from '../update-book-form';
 import AddBookForm from '../add-book-form';
 import SearchField from '../search-field';
 
-const BookListContainer = () => {
+interface RowRenderItemType {
+  index: number,
+  key: string,
+  style: React.CSSProperties | undefined
+}
+
+const BookListContainer = (): JSX.Element => {
   const [input, setInput] = useState('');
   const [updateBookId, setUpdateBookId] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -60,7 +65,7 @@ const BookListContainer = () => {
     () => { dispatch(fetchBooksAsync(serviceValue)); }, [dispatch, serviceValue],
   );
 
-  const rowRendererItem = ({ index, key, style }: any) => {
+  const rowRendererItem = ({ index, key, style }: RowRenderItemType) => {
     const book = savedBookList[index];
     if (book) {
       const {

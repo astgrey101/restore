@@ -16,7 +16,7 @@ export type AddBookData = {
 export default class BookstoreService {
     apiBase = 'http://localhost:8000'
 
-    getBooks = async () => {
+    getBooks = async (): Promise<Array<BookData>> => {
       const res = await fetch(`${this.apiBase}/books`);
       if (!res.ok) {
         throw new Error('My Error message');
@@ -26,7 +26,7 @@ export default class BookstoreService {
     getBookWithParams = async (
       title: string,
       author: string,
-    ) => {
+    ): Promise<BookData> => {
       const encodedTitle = encodeURIComponent(title);
       const encodedAuthor = encodeURIComponent(author);
       const res = await fetch(`${this.apiBase}/books?title=${encodedTitle}&author=${encodedAuthor}`);
@@ -35,14 +35,14 @@ export default class BookstoreService {
       } else return res.json();
     }
 
-    getBookById = async (id: number) => {
+    getBookById = async (id: number): Promise<BookData> => {
       const res = await fetch(`${this.apiBase}/books/${id}`);
       if (!res.ok) {
         throw new Error('My Error message');
       } else return res.json();
     }
 
-    addBook = async (data: AddBookData) => {
+    addBook = async (data: AddBookData): Promise<void> => {
       const res = await fetch(`${this.apiBase}/books`, {
         method: 'POST',
         headers: {
@@ -61,7 +61,7 @@ export default class BookstoreService {
       }
     }
 
-    updateBook = async (data: BookData) => {
+    updateBook = async (data: BookData): Promise<void> => {
       const res = await fetch(`${this.apiBase}/books/${data.id}`, {
         method: 'PUT',
         headers: {

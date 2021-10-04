@@ -6,7 +6,7 @@ import { CatalogPage, MainPage, ShoppingCardPage } from '../pages';
 import ShopHeader from '../shop-header';
 import { getTotalAmmount, getTotalSum } from '../shopping-cart-table/selectors';
 
-const App = () => {
+const App = (): JSX.Element => {
   const totalSum = useSelector(getTotalSum);
   const totalAmount = useSelector(getTotalAmmount);
 

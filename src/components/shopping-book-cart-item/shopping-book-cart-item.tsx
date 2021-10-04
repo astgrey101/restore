@@ -21,7 +21,9 @@ const ShoppingBookCartItem: FC<ShoppingBookCartItemType> = ({ item, idx }) => {
 
   const { id, amount } = item;
 
-  const bookItem = useSelector(useMemo(() => getBookItemById(item.id), [item.id]));
+  // const bookItem = useSelector(useMemo(() => getBookItemById(item.id), [item.id]));
+  const bookItemSelector = useSelector(getBookItemById);
+  const bookItem = useMemo(() => bookItemSelector(item.id), [item.id]);
 
   if (!bookItem) {
     return <></>;

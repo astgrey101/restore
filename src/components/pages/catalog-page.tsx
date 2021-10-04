@@ -1,7 +1,7 @@
 import React from 'react';
 import BookListContainer from '../book-list';
 
-const CatalogPage = () => (
+const CatalogPage = (): JSX.Element => (
   <div>
     <BookListContainer />
   </div>

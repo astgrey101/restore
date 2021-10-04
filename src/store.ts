@@ -19,4 +19,4 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(persistedReducer, composeEnhancer(applyMiddleware(thunk)));
 export const persistor = persistStore(store);
 
-export type AppDispatch = ThunkDispatch<RootState, any, AnyAction>;
+export type AppDispatch = ThunkDispatch<RootState, undefined, AnyAction>;

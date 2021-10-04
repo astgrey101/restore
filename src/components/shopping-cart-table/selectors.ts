@@ -1,17 +1,8 @@
 import { createSelector } from 'reselect';
 import {
-  bookListSelector, getBookItemById, getCartItemById, getCartItemsList,
+  bookListSelector, getCartItemsList,
 } from '../../reducers/selectors';
 import { BookData } from '../../services/bookstore-service';
-
-export const getItemSumById = (itemId: number) => createSelector(
-  getBookItemById(itemId),
-  getCartItemById(itemId),
-  (item: BookData | undefined, cartItem: {id: number, amount: number}) => {
-    const itemPrice = item?.price ?? 0;
-    return itemPrice * cartItem.amount;
-  },
-);
 
 export const getTotalSum = createSelector(
   getCartItemsList,

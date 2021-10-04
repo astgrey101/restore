@@ -7,7 +7,7 @@ import { getCartItemsList } from '../../reducers/selectors';
 import MyContext from '../bookstore-service-context';
 import { fetchBooksAsync } from '../../actions';
 
-const ShoppingCartTable = () => {
+const ShoppingCartTable = (): JSX.Element => {
   // block added here in order to set all books in state when page is loaded
   const dispatch = useDispatch();
   const serviceValue = useContext(MyContext);
