@@ -1,4 +1,4 @@
-interface ShoppingCartType {
+export interface ShoppingCartType {
     cartItems: {
         [id: number] : {id: number, amount: number}
     }

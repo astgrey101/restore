@@ -8,11 +8,6 @@ export const getCartItemsList = (
   state: RootState,
 ): {id: number, amount: number}[] => Object.values(state.shoppingCart.cartItems);
 
-// export const getBookItemById = (itemId: number) => createSelector(
-//   bookListSelector,
-//   (books:BookData[]) => books.find((book: BookData) => book.id === itemId),
-// );
-
 export const getBookItemById = createSelector(
   bookListSelector,
   (books: Array<BookData>) => (
@@ -20,6 +15,21 @@ export const getBookItemById = createSelector(
   ) => books.find((book: BookData) => book.id === itemId),
 );
 
-export const getCartItemById = (
-  itemId: number,
-) => (state: RootState): {id: number, amount: number} => state.shoppingCart.cartItems[itemId];
+export const getTotalSum = createSelector(
+  getCartItemsList,
+  bookListSelector,
+  (
+    cartItems: Array<{id: number, amount: number}>, books: Array<BookData>,
+  ) => cartItems.reduce((sum: number, item: {id: number, amount: number}) => {
+    const book = books.find((bookItem: BookData) => bookItem.id === item.id);
+    const bookPrice = book?.price ?? 0;
+    return sum + item.amount * bookPrice;
+  }, 0),
+);
+
+export const getTotalAmount = createSelector(
+  getCartItemsList,
+  (
+    cartItems: Array<{id: number, amount: number}>,
+  ) => cartItems.reduce((sum: number, item: {id: number, amount: number}) => sum + item.amount, 0),
+);

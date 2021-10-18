@@ -71,23 +71,26 @@ const BookListContainer = (): JSX.Element => {
       const {
         id, title, author, price, coverImage,
       } = book;
+      const testId = `book-${id}`;
+      const addToCartBtnTestId = `add-to-cart-btn-${id}`;
+      const editBookBtnTestId = `edit-book-btn-${id}`;
       return (
-        <div className="book-list-item" style={style} key={key}>
+        <div className="book-list-item" style={style} key={key} data-testid={testId}>
           <div className="book-cover">
             <img src={coverImage} alt="cover" />
           </div>
           <div className="book-details">
-            <span className="book-title">{title}</span>
-            <div className="book-author">{author}</div>
-            <div className="book-price">
+            <span className="book-title" data-testid="book-title">{title}</span>
+            <div className="book-author" data-testid="book-author">{author}</div>
+            <div className="book-price" data-testid="book-price">
               $
               {price}
             </div>
             <div>
-              <button type="button" className="btn btn-info add-to-cart" onClick={() => dispatch(addBookToCart(id))}>
+              <button type="button" className="btn btn-info add-to-cart" onClick={() => dispatch(addBookToCart(id))} data-testid={addToCartBtnTestId}>
                 Add to cart
               </button>
-              <button type="button" className="btn btn-info edit-book" onClick={setUpdateBookFormVisible} data-id={id}>
+              <button type="button" className="btn btn-info edit-book" onClick={setUpdateBookFormVisible} data-id={id} data-testid={editBookBtnTestId}>
                 Edit Book
               </button>
             </div>
@@ -108,7 +111,7 @@ const BookListContainer = (): JSX.Element => {
   return (
     <div>
       <SearchField keyword={input} setKeyword={setInput} />
-      <button type="button" className="btn btn-info show-add-new-book" onClick={setAddBookFormVisible}>
+      <button data-testid="add-book-btn" type="button" className="btn btn-info show-add-new-book" onClick={setAddBookFormVisible}>
         Add Book
       </button>
 

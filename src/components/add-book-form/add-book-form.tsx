@@ -78,29 +78,29 @@ const AddBookForm = (): JSX.Element => {
     <div>
       <form className="add-book-form" onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="inputTitle" className="title-label">Book Title</label>
-        <input id="inputTitle" type="text" placeholder="title" {...register('title')} />
+        <input data-testid="add-book-input-title" id="inputTitle" type="text" placeholder="title" {...register('title')} />
         {errors.title && (<p>{errors.title.message}</p>)}
 
         <label htmlFor="inputAuthor">Book Author</label>
-        <input id="inputAuthor" type="text" placeholder="author" {...register('author')} />
+        <input data-testid="add-book-input-author" id="inputAuthor" type="text" placeholder="author" {...register('author')} />
         {errors.author && (<p>{errors.author.message}</p>)}
 
         <label htmlFor="inputPrice">Book Price</label>
-        <input id="inputPrice" type="number" placeholder="price in $" {...register('price')} />
+        <input data-testid="add-book-input-price" id="inputPrice" type="number" placeholder="price in $" {...register('price')} />
         {errors.price && (getValues('price') === '') && (<p>Book Price should be filled in</p>)}
         {errors.price && (getValues('price') < 0) && (<p>{errors.price.message}</p>)}
 
         <label htmlFor="temp-id">Book Cover Image</label>
         <label className="upload-file-btn">
           Browse
-          <input type="file" id="file1" accept=".png, .jpg, .jpeg" {...register('coverImage')} />
+          <input data-testid="add-book-input-image" type="file" id="file1" accept=".png, .jpg, .jpeg" {...register('coverImage')} />
         </label>
 
         {watchImage && (watchImage.length !== 0)
-                && (<img id="image1" alt="cover_image1" width="120px" height="200px" src={imageSrc} />)}
+                && (<img data-testid="add-book-image" id="image1" alt="cover_image1" width="120px" height="200px" src={imageSrc} />)}
         {errors.coverImage && !imageVisible && (<p>{errors.coverImage.message}</p>)}
 
-        <input type="submit" value="Add new book" className="btn btn-info" />
+        <input data-testid="add-book-submit-btn" type="submit" value="Add new book" className="btn btn-info" />
         {bookAdded && (<p className="book-added-confirmation">Book successfully added</p>)}
       </form>
     </div>

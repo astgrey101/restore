@@ -45,7 +45,7 @@ const bookList = (state: BookListType = initialState, action: AnyAction): BookLi
     case 'BOOK_ADDED_TO_CATALOG': {
       return {
         ...state,
-        books: state.books.concat(action.payload.newBook[0]),
+        books: state.books.concat(action.payload.newBook),
         status: action.payload.status,
       };
     }
@@ -73,7 +73,7 @@ const bookList = (state: BookListType = initialState, action: AnyAction): BookLi
     case 'UPDATE_BOOKS_REQUEST_PENDING':
       return {
         ...state,
-        status: action.payload.status,
+        status: action.payload,
       };
 
     default:
