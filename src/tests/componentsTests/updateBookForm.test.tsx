@@ -206,17 +206,17 @@ describe('Update book form component tests', () => {
     );
 
     await waitFor(() => expect(screen.getByText('Book successfully updated')).toBeDefined());
-    jest.useFakeTimers();
     await act(
       async () => {
+        jest.useFakeTimers();
         // timeout not set. need to fix
         jest.setTimeout(4000);
         await waitFor(() => expect(screen.queryByText('Book successfully updated')).toBeDefined());
         await waitFor(() => expect(inputTitleField).toHaveValue('Tests est esse labore aute consequat.'));
         await waitFor(() => expect(inputAuthorField).toHaveValue('Tests Johnston'));
         await waitFor(() => expect(inputPriceField).toHaveValue(1000));
+        jest.useRealTimers();
       },
     );
-    jest.runAllTimers();
   });
 });

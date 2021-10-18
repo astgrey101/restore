@@ -37,13 +37,12 @@ const shoppingCart = (
     case 'BOOK_REMOVED_TO_CART': {
       const currentAmount = state.cartItems[action.payload.bookId]?.amount ?? 0;
       if (currentAmount === 1) {
-        const { [action.payload.bookId]: deletedItem, ...otherParams } = state.cartItems;
+        const { [action.payload.bookId]: deletedItem, ...otherItems } = state.cartItems;
         return {
           ...state,
           cartItems: {
-            ...otherParams,
+            ...otherItems,
           },
-
         };
       }
       return {
@@ -55,16 +54,15 @@ const shoppingCart = (
             amount: currentAmount + action.payload.amount,
           },
         },
-
       };
     }
 
     case 'ALL_BOOKS_REMOVED_TO_CART': {
-      const { [action.payload.bookId]: deletedItem, ...otherParams } = state.cartItems;
+      const { [action.payload.bookId]: deletedItem, ...otherItems } = state.cartItems;
       return {
         ...state,
         cartItems: {
-          ...otherParams,
+          ...otherItems,
         },
       };
     }

@@ -42,7 +42,11 @@ describe('Shopping Cart Item tests', () => {
   test('Shopping Cart Item display test', async () => {
     render(
       <Provider store={myStore}>
-        <ShoppingBookCartItem item={testCartItem['1']} idx={0} />
+        <table>
+          <tbody>
+            <ShoppingBookCartItem item={testCartItem['1']} idx={0} />
+          </tbody>
+        </table>
       </Provider>,
     );
     await expect(screen.getByTestId('item-amount-1')).toHaveTextContent(`${testCartItem['1'].amount}`);
