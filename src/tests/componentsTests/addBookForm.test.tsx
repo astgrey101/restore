@@ -87,6 +87,7 @@ describe('Add book form component tests', () => {
   });
 
   test('Add book test', async () => {
+    jest.useFakeTimers();
     render(
       <Provider store={store}>
         <AddBookForm />
@@ -116,13 +117,11 @@ describe('Add book form component tests', () => {
     fireEvent.click(screen.getByTestId('add-book-submit-btn'));
 
     await waitFor(() => expect(screen.getByText('Book successfully added')).toBeDefined());
-    await act(
-      async () => {
-        // wait until form become empty
-        await new Promise((r) => setTimeout(r, 4000));
-        await waitFor(() => expect(screen.queryByText('Book successfully added')).toBeDefined());
-        await waitFor(() => expect(screen.getByTestId('add-book-input-title')).toHaveValue(''));
-      },
-    );
+    act(() => {
+      jest.runAllTimers();
+    });
+    await waitFor(() => expect(screen.queryByText('Book successfully added')).toBeNull());
+    await waitFor(() => expect(screen.getByTestId('add-book-input-title')).toHaveValue(''));
+    jest.useRealTimers();
   });
 });

@@ -188,6 +188,7 @@ describe('Update book form component tests', () => {
   });
 
   test('Update book without change image test', async () => {
+    jest.useFakeTimers();
     render(
       <Provider store={myStore}>
         <UpdateBookForm bookId={testBook.id} switchDisplayEditForm={() => fn} />
@@ -206,17 +207,13 @@ describe('Update book form component tests', () => {
     );
 
     await waitFor(() => expect(screen.getByText('Book successfully updated')).toBeDefined());
-    await act(
-      async () => {
-        jest.useFakeTimers();
-        // timeout not set. need to fix
-        jest.setTimeout(4000);
-        await waitFor(() => expect(screen.queryByText('Book successfully updated')).toBeDefined());
-        await waitFor(() => expect(inputTitleField).toHaveValue('Tests est esse labore aute consequat.'));
-        await waitFor(() => expect(inputAuthorField).toHaveValue('Tests Johnston'));
-        await waitFor(() => expect(inputPriceField).toHaveValue(1000));
-        jest.useRealTimers();
-      },
-    );
+    act(() => {
+      jest.runAllTimers();
+    });
+    await waitFor(() => expect(screen.queryByText('Book successfully updated')).toBeNull());
+    await waitFor(() => expect(inputTitleField).toHaveValue('Tests est esse labore aute consequat.'));
+    await waitFor(() => expect(inputAuthorField).toHaveValue('Tests Johnston'));
+    await waitFor(() => expect(inputPriceField).toHaveValue(1000));
+    jest.useRealTimers();
   });
 });
