@@ -10,14 +10,14 @@ type ShopHeaderType = {
 const ShopHeader:FC<ShopHeaderType> = ({ numItems, total }) => (
   <header className="shop-header row">
     <Link to="/">
-      <div className="logo text-dark">ReStore</div>
+      <div data-testid="link-to-main-page" className="logo text-dark">ReStore</div>
     </Link>
     <div className="shop-items">
       <Link to="/catalog">
-        <div className="store">Books Catalog</div>
+        <div data-testid="link-to-catalog" className="store">Books Catalog</div>
       </Link>
       <Link to="/items">
-        <div className="shopping-cart">
+        <div className="shopping-cart" data-testid="link-to-shopping-cart">
           <i className="cart-icon fa fa-shopping-cart" />
           {numItems}
           {' '}

@@ -1,16 +1,18 @@
 {
   "name": "restore",
+  "homepage": "https://astgrey101.github.io/restore",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^2.8.0",
     "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "@types/jest": "^26.0.23",
     "@types/node": "^12.20.15",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
+    "axios": "^0.22.0",
+    "identity-obj-proxy": "^3.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -28,11 +30,32 @@
     "yup": "^0.32.9"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
-    "lint": "eslint '*/**/*.{js,ts,tsx}'"
+    "lint": "eslint './src/**'",
+    "server": "json-server --watch ./src/services/db.json --port 8000"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/services/",
+      "<rootDir>/src/react-app-env.d.ts",
+      "<rootDir>/src/reportWebVitals.ts"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "transform": {
+      "^.+\\.(t|j)sx?$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "identity-obj-proxy"
+    }
   },
   "eslintConfig": {
     "extends": [
@@ -53,8 +76,10 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react": "^11.2.7",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-virtualized": "^9.21.13",
+    "@types/redux-mock-store": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
     "eslint": "^7.32.0",
@@ -63,6 +88,12 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "json-server": "^0.16.3"
+    "gh-pages": "^3.2.3",
+    "jest": "26.6.0",
+    "json-server": "^0.16.3",
+    "msw": "^0.35.0",
+    "redux-mock-store": "^1.5.4",
+    "ts-jest": "^26.4.4",
+    "ts-node-dev": "^1.1.8"
   }
 }

@@ -1,13 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import './shopping-cart-table.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTotalSum } from './selectors';
 import ShoppingBookCartItem from '../shopping-book-cart-item';
-import { getCartItemsList } from '../reducers/selectors';
-import MyContext from '../components/bookstore-service-context';
-import { fetchBooksAsync } from '../actions';
+import { getCartItemsList, getTotalSum } from '../../reducers/selectors';
+import MyContext from '../bookstore-service-context';
+import { fetchBooksAsync } from '../../actions';
 
-const ShoppingCartTable = () => {
+const ShoppingCartTable = (): JSX.Element => {
   // block added here in order to set all books in state when page is loaded
   const dispatch = useDispatch();
   const serviceValue = useContext(MyContext);
@@ -28,11 +27,11 @@ const ShoppingCartTable = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Item</th>
-            <th className="title">Title</th>
-            <th>Count</th>
-            <th>Price</th>
-            <th>Action</th>
+            <th data-testid="shopping-cart-item-header">Item</th>
+            <th data-testid="shopping-cart-title-header" className="title">Title</th>
+            <th data-testid="shopping-cart-count-header">Count</th>
+            <th data-testid="shopping-cart-price-header">Price</th>
+            <th data-testid="shopping-cart-action-header">Action</th>
           </tr>
         </thead>
 
@@ -43,7 +42,7 @@ const ShoppingCartTable = () => {
         </tbody>
       </table>
 
-      <div className="total">
+      <div data-testid="shopping-cart-total" className="total">
         Total: $
         {totalSum}
       </div>

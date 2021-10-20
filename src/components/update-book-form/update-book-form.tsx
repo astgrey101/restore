@@ -14,7 +14,14 @@ import { getBookItemById } from '../../reducers/selectors';
 
 interface BookItemType {
     bookId: number,
-    switchDisplayEditForm: any
+    switchDisplayEditForm: (value: boolean) => void
+}
+
+interface SubmitUpdateBookData {
+  author: string,
+  coverImage: FileList,
+  price: number,
+  title: string
 }
 
 const UpdateBookForm: FC<BookItemType> = ({ bookId, switchDisplayEditForm }) => {
@@ -41,8 +48,8 @@ const UpdateBookForm: FC<BookItemType> = ({ bookId, switchDisplayEditForm }) => 
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const updatedBook = useSelector(useMemo(() => getBookItemById(bookId), [bookId])) as BookData;
+  const updatedBookSelector = useSelector(getBookItemById);
+  const updatedBook = useMemo(() => updatedBookSelector(bookId), [bookId]) as BookData;
 
   const watchImage = watch('coverImage', updatedBook.coverImage);
 
@@ -76,7 +83,7 @@ const UpdateBookForm: FC<BookItemType> = ({ bookId, switchDisplayEditForm }) => 
     });
   }, [updatedBook, reset]);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: SubmitUpdateBookData) => {
     let updateCoverImageValue: string;
     if (data.coverImage.length !== 0) {
       updateCoverImageValue = imageSrc;
@@ -106,35 +113,35 @@ const UpdateBookForm: FC<BookItemType> = ({ bookId, switchDisplayEditForm }) => 
             <label htmlFor="temp-id">
               Book Cover Image
             </label>
-            <img id="image2" alt="cover_image2" width="120px" height="200px" src={uploadImage} />
+            <img data-testid="update-book-image" id="image2" alt="cover_image2" width="120px" height="200px" src={uploadImage} />
             <label className="upload-file-btn" htmlFor="file2">
               Browse
-              <input type="file" id="file2" accept=".png, .jpg, .jpeg" {...register('coverImage')} />
+              <input data-testid="update-book-input-image" type="file" id="file2" accept=".png, .jpg, .jpeg" {...register('coverImage')} />
             </label>
             {/* {errors.coverImage && (<p>{errors.coverImage.message}</p>)} */}
           </div>
           <div className="update-book-group">
             <div>
               <label htmlFor="inputTitle" className="title-label">Book Title</label>
-              <input id="inputTitle" type="text" placeholder="title" {...register('title')} />
+              <input data-testid="edit-book-input-title" id="inputTitle" type="text" placeholder="title" {...register('title')} />
               {errors.title && (<p>{errors.title.message}</p>)}
             </div>
             <div>
               <label htmlFor="inputAuthor">Book Author</label>
-              <input id="inputAuthor" type="text" placeholder="author" {...register('author')} />
+              <input data-testid="edit-book-input-author" id="inputAuthor" type="text" placeholder="author" {...register('author')} />
               {errors.author && (<p>{errors.author.message}</p>)}
             </div>
             <div>
               <label htmlFor="inputPrice">Book Price</label>
-              <input id="inputPrice" type="number" placeholder="price in $" {...register('price')} />
+              <input data-testid="edit-book-input-price" id="inputPrice" type="number" placeholder="price in $" {...register('price')} />
               {errors.price && (getValues('price') === '') && (<p>Book Price should be filled in</p>)}
               {errors.price && (getValues('price') < 0) && (<p>{errors.price.message}</p>)}
             </div>
           </div>
         </div>
         <div className="update-book-group3">
-          <input type="submit" value="Save changes" className="btn btn-info save-edit-book" />
-          <button className="btn btn-info cancel-edit-book" type="button" onClick={() => switchDisplayEditForm(false)}>
+          <input data-testid="save-edit-book-btn" type="submit" value="Save changes" className="btn btn-info save-edit-book" />
+          <button data-testid="cancel-edit-book-btn" className="btn btn-info cancel-edit-book" type="button" onClick={() => switchDisplayEditForm(false)}>
             Cancel Editing
           </button>
         </div>

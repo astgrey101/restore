@@ -1,20 +1,33 @@
 import React, { Component } from 'react';
 import ErrorIndicator from '../error-indicator';
 
-export default class ErrorBoundary extends Component<{ children: any }, { hasError: any }> {
-  constructor(props: any) {
+interface HasErrorType {
+  hasError: boolean
+}
+
+export default class ErrorBoundary extends
+  Component<{ children: JSX.Element }, { hasErrorValue: HasErrorType }> {
+  constructor(props: never) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {
+      hasErrorValue: {
+        hasError: false,
+      },
+    };
   }
 
-  componentDidCatch() {
-    this.setState({ hasError: true });
+  componentDidCatch(): void {
+    this.setState({
+      hasErrorValue: {
+        hasError: false,
+      },
+    });
   }
 
-  render() {
-    const { hasError } = this.state;
+  render(): JSX.Element {
+    const { hasErrorValue } = this.state;
     const { children } = this.props;
-    if (hasError.hasError) {
+    if (hasErrorValue.hasError) {
       return <ErrorIndicator />;
     }
 
