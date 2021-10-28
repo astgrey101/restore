@@ -4,7 +4,7 @@ import React, {
 import './book-list.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { List, AutoSizer, WindowScroller } from 'react-virtualized';
-import { addBookToCart, fetchBooksAsync } from '../../actions';
+import { fetchBooksAsync } from '../../actions';
 import Spinner from '../spiner';
 import ErrorIndicator from '../error-indicator';
 import { RootState } from '../../reducers';
@@ -12,8 +12,9 @@ import MyContext from '../bookstore-service-context/bookstore-service-context';
 import UpdateBookForm from '../update-book-form';
 import AddBookForm from '../add-book-form';
 import SearchField from '../search-field';
+import BookListItem from '../book-list-item/book-list-item';
 
-interface RowRenderItemType {
+export interface RowRenderItemType {
   index: number,
   key: string,
   style: React.CSSProperties | undefined
@@ -68,35 +69,54 @@ const BookListContainer = (): JSX.Element => {
   const rowRendererItem = ({ index, key, style }: RowRenderItemType) => {
     const book = savedBookList[index];
     if (book) {
-      const {
-        id, title, author, price, coverImage,
-      } = book;
-      const testId = `book-${id}`;
-      const addToCartBtnTestId = `add-to-cart-btn-${id}`;
-      const editBookBtnTestId = `edit-book-btn-${id}`;
       return (
-        <div className="book-list-item" style={style} key={key} data-testid={testId}>
-          <div className="book-cover">
-            <img src={coverImage} alt="cover" />
-          </div>
-          <div className="book-details">
-            <span className="book-title" data-testid="book-title">{title}</span>
-            <div className="book-author" data-testid="book-author">{author}</div>
-            <div className="book-price" data-testid="book-price">
-              $
-              {price}
-            </div>
-            <div>
-              <button type="button" className="btn btn-info add-to-cart" onClick={() => dispatch(addBookToCart(id))} data-testid={addToCartBtnTestId}>
-                Add to cart
-              </button>
-              <button type="button" className="btn btn-info edit-book" onClick={setUpdateBookFormVisible} data-id={id} data-testid={editBookBtnTestId}>
-                Edit Book
-              </button>
-            </div>
-          </div>
-        </div>
+        <BookListItem
+          book={book}
+          key={key}
+          style={style}
+          switchDisplayEditForm={setUpdateBookFormVisible}
+        />
       );
+      // const {
+      //   id, title, author, price, coverImage,
+      // } = book;
+      // const testId = `book-${id}`;
+      // const addToCartBtnTestId = `add-to-cart-btn-${id}`;
+      // const editBookBtnTestId = `edit-book-btn-${id}`;
+      // return (
+      //   <div className="book-list-item" style={style} key={key} data-testid={testId}>
+      //     <div className="book-cover">
+      //       <img src={coverImage} alt="cover" />
+      //     </div>
+      //     <div className="book-details">
+      //       <span className="book-title" data-testid="book-title">{title}</span>
+      //       <div className="book-author" data-testid="book-author">{author}</div>
+      //       <div className="book-price" data-testid="book-price">
+      //         $
+      //         {price}
+      //       </div>
+      //       <div>
+      //         <button
+      //           type="button"
+      //           className="btn btn-info add-to-cart"
+      //           onClick={() => dispatch(addBookToCart(id))}
+      //           data-testid={addToCartBtnTestId}
+      //         >
+      //           Add to cart
+      //         </button>
+      //         <button
+      //           type="button"
+      //           className="btn btn-info edit-book"
+      //           onClick={setUpdateBookFormVisible}
+      //           data-id={id}
+      //           data-testid={editBookBtnTestId}
+      //         >
+      //           Edit Book
+      //         </button>
+      //       </div>
+      //     </div>
+      //   </div>
+      // );
     } return null;
   };
 
